@@ -30,8 +30,7 @@ const Login = () => {
     axios
       .post("http://localhost:3001/login", data)
       .then((result) => {
-        console.log(result.data);
-
+      
         localStorage.setItem("token", result.data.token);
         navigate("/home");
       })

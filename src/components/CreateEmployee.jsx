@@ -4,7 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Navbar from "../Navbar";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Define the Zod schema for validation
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -43,64 +44,32 @@ const CreateEmployee = () => {
     resolver: zodResolver(formSchema),
   });
 
-  // const onSubmit = (data) => {
-  //   console.log("data", data);
-  //   const formData = new FormData();
-  
-  //   for (const key in data) {
-  //     if (key === "imgUpload" && data?.imgUpload.length>0) {
-        
-  //       formData.append(key, data?.imgUpload[0]); // Append the file
-  //       console.log("formData", formData);
-  //     } else {
-  //       formData.append(key, data[key]); // Append other form data
-  //     }
-  //   }
-
-  //   for (let pair of formData.entries()) {
-  //     console.log(`${pair[0]}: ${pair[1]}`);
-  //   }
-
-  //   axios
-  //     .post("http://localhost:3001/addEmployee", formData
-  //       // , {
-  //       // headers: {
-  //       //   "content-Type": "multipart/form-data",
-  //       // },
-  //    // }
-  //   )
-  //     .then((result) => {
-  //       console.log(result,"hello");
-  //       reset();
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
   const onSubmit = (data) => {
-    console.log("data", data);
     const formData = new FormData();
-  
+
     // Append all fields except files to formData
     for (const key in data) {
       if (key === "imgUpload" && data.imgUpload.length > 0) {
-        console.log(data.imgUpload[0],"ki");
         formData.append(key, data?.imgUpload[0]); // Append the file
       } else {
         formData.append(key, data[key]); // Append other form data
       }
     }
-    console.log(formData);
+
     axios
-      .post("http://localhost:3001/addEmployee", formData
-      )
+      .post("http://localhost:3001/addEmployee", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((result) => {
-        console.log(result, "hello");
         reset();
       })
       .catch((err) => console.log(err));
   };
-  
-   return (
-     <>
+
+  return (
+    <>
       <Navbar />
       <div className="container mx-auto p-4">
         <form
@@ -285,6 +254,7 @@ const CreateEmployee = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </>
   );
 };

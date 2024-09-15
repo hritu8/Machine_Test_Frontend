@@ -8,8 +8,8 @@ const EmployeeList = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Search term for filtering
   const [sortConfig, setSortConfig] = useState(null); // Sorting configuration
   const [currentPage, setCurrentPage] = useState(1); // Current page for pagination
-  const [employeesPerPage] = useState(2); // Number of employees to display per page
-
+  const [employeesPerPage] = useState(5); // Number of employees to display per page
+ 
   // Sort the employee data based on the config
   const sortedEmployees = [...employees].sort((a, b) => {
     if (sortConfig !== null) {
@@ -65,13 +65,13 @@ const EmployeeList = () => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
+   
     axios
       .delete("http://localhost:3001/deleteEmployee", {
         data: { id: String(id) }, // Convert ID to string
       })
       .then((response) => {
-        console.log(response.data);
+       
         setEmployees((prevEmployees) =>
           prevEmployees.filter((employee) => employee.id !== id)
         );
@@ -101,7 +101,7 @@ const EmployeeList = () => {
         }
       )
       .then((result) => {
-        console.log(result);
+      
         setEmployees((prevEmployees) =>
           prevEmployees.map((employee) =>
             employee.id === id ? { ...employee, status: newStatus } : employee
@@ -195,7 +195,7 @@ const EmployeeList = () => {
                   </td>
                   <td className="px-6 py-4">
                     <img
-                      src={employee.image}
+                      src={employee.imgUpload}
                       alt={employee.name}
                       className="w-12 h-12 object-cover rounded-full"
                     />

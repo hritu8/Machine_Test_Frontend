@@ -50,10 +50,10 @@ const CreateEmployee = () => {
       const fetchEmployee = async () => {
         try {
           const response = await axios.get(`http://localhost:3001/edit/${id}`);
-          console.log(response.data);
+         
           reset(response.data); // Populate form with fetched data
         } catch (err) {
-          console.error(err);
+          
         }
       };
 
@@ -78,7 +78,7 @@ const CreateEmployee = () => {
         },
       })
       .then((result) => {
-        console.log("result", result);
+      
         reset(result.data); // Reset form after submission
       })
       .catch((err) => console.log(err));

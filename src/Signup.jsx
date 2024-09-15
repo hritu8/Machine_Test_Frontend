@@ -32,9 +32,9 @@ function Signup() {
     axios
       .post("http://localhost:3001/register", data)
       .then((result) => {
-        console.log(result.data);
+       
         navigate("/login");
-        console.log(result);
+      
       })
       .catch((err) => console.log(err));
   };
