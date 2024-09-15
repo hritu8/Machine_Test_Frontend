@@ -78,8 +78,8 @@ const CreateEmployee = () => {
         },
       })
       .then((result) => {
-        console.log(result);
-        reset(); // Reset form after submission
+        console.log("result", result);
+        reset(result.data); // Reset form after submission
       })
       .catch((err) => console.log(err));
   };

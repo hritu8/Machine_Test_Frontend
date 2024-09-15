@@ -4,6 +4,7 @@ import { z } from "zod";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "./components/store";
 
 // Zod Schema for Login validation
 const LoginSchema = z.object({
@@ -15,6 +16,7 @@ const LoginSchema = z.object({
 
 const Login = () => {
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const {
     register,
@@ -28,11 +30,10 @@ const Login = () => {
     axios
       .post("http://localhost:3001/login", data)
       .then((result) => {
-        console.log(result);
-        if (result.data === "Logged in successfully") {
-          localStorage.setItem("token", "eprjrh36w4lu534yh");
-          navigate("/home");
-        }
+        console.log(result.data);
+
+        localStorage.setItem("token", result.data.token);
+        navigate("/home");
       })
       .catch((err) => console.log(err));
   };
