@@ -64,8 +64,18 @@ const CreateEmployee = () => {
       })
       .then((result) => {
         reset();
+        // Show success toast
+        toast.success("Employee created successfully!", {
+          position: "top-center",
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        // Show error toast in case of failure
+        toast.error("Error creating employee. Please try again.", {
+          position: "top-center",
+        });
+      });
   };
 
   return (

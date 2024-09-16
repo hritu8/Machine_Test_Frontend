@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Navbar from "../Navbar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Define the Zod schema for validation
 const formSchema = z.object({
@@ -50,11 +52,9 @@ const CreateEmployee = () => {
       const fetchEmployee = async () => {
         try {
           const response = await axios.get(`http://localhost:3001/edit/${id}`);
-         
+
           reset(response.data); // Populate form with fetched data
-        } catch (err) {
-          
-        }
+        } catch (err) {}
       };
 
       fetchEmployee();
@@ -78,10 +78,17 @@ const CreateEmployee = () => {
         },
       })
       .then((result) => {
-      
         reset(result.data); // Reset form after submission
+        toast.success("Employee Edited successfully!", {
+          position: "top-center",
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toast.error("Error Editing employee. Please try again.", {
+          position: "top-center",
+        });
+        console.log(err);
+      });
   };
 
   return (
@@ -270,6 +277,7 @@ const CreateEmployee = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </>
   );
 };

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]); // Employee list
@@ -75,8 +77,16 @@ const EmployeeList = () => {
         setEmployees((prevEmployees) =>
           prevEmployees.filter((employee) => employee.id !== id)
         );
+         // Show success toast
+         toast.success("Employee Deleted successfully!", {
+          position: "top-center",
+        });
       })
       .catch((error) => {
+         // Show success toast
+         toast.error("Employee cannot br Deleted! Please try again.", {
+          position: "top-center",
+        });
         console.error(error);
       });
   };
@@ -107,9 +117,16 @@ const EmployeeList = () => {
             employee.id === id ? { ...employee, status: newStatus } : employee
           )
         );
+        toast.success("Status has been changed!", {
+          position: "top-center",
+        });
+
       })
       .catch((err) => {
         console.error(err);
+        toast.error("Error Changing Status. Please try again. ", {
+          position: "top-center",
+        });
       });
   };
 
@@ -286,6 +303,7 @@ const EmployeeList = () => {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

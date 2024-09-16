@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "./components/store";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Zod Schema for Login validation
 const LoginSchema = z.object({
@@ -30,11 +32,18 @@ const Login = () => {
     axios
       .post("http://localhost:3001/login", data)
       .then((result) => {
-      
+        toast.success("User LoggedIn  successfully!", {
+          position: "top-center",
+        });
         localStorage.setItem("token", result.data.token);
         navigate("/home");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toast.error("Error loggedIn User!  Please try again.", {
+          position: "top-center",
+        });
+        console.log(err);
+      });
   };
 
   return (
@@ -109,6 +118,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
